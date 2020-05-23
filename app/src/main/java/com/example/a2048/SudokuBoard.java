@@ -145,7 +145,7 @@ public class SudokuBoard extends View {
     }
 
     public void down() {
-        grid.down();
+        grid.down(i);
         grid.randOneElement();
         invalidate();
     }
@@ -158,14 +158,14 @@ public class SudokuBoard extends View {
 
 
     public void left() {
-        grid.left();
+        grid.left(i);
         grid.randOneElement();
         invalidate();
     }
 
 
     public void right() {
-        grid.right();
+        grid.right(i);
         grid.randOneElement();
         invalidate();
     }

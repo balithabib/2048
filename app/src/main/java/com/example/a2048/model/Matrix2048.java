@@ -35,95 +35,99 @@ public class Matrix2048 {
         return matrix[row][column];
     }
 
-    public void up() {
-        for (int k = 0; k < size - 1; k++) {
-            for (int column = 0; column < size; column++) {
-                for (int i = 0; i < size - 1; i++) {
-                    if (!hasElement(i, column) && hasElement(i + 1, column)) {
-                        // permutation
-                        int tmp = matrix[i][column];
-                        matrix[i][column] = matrix[i + 1][column];
-                        matrix[i + 1][column] = tmp;
-                    }
-                    if (hasElement(i, column) && hasElement(i + 1, column) && (matrix[i][column] == matrix[i + 1][column])) {
-                        // add
-                        matrix[i][column] *= 2;
-                        matrix[i + 1][column] = 0;
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    public void up(final int i) {
 
-    public void down() {
-        for (int k = size - 1; k > 0; k--) {
-            for (int column = 0; column < size; column++) {
-                for (int i = size - 1; i > 0; i--) {
-                    if (!hasElement(i, column) && hasElement(i - 1, column)) {
-                        // permutation
-                        int tmp = matrix[i][column];
-                        matrix[i][column] = matrix[i - 1][column];
-                        matrix[i - 1][column] = tmp;
-                    }
-                    if (hasElement(i, column) && hasElement(i - 1, column) && (matrix[i][column] == matrix[i - 1][column])) {
-                        // add
-                        matrix[i][column] *= 2;
-                        matrix[i - 1][column] = 0;
-                        break;
-                    }
-                }
+        for (int j = 0; j < size - 1; j++) {
+            if (!hasElement(j, i) && hasElement(j + 1, i)) {
+                // permutation
+                int tmp = matrix[j][i];
+                matrix[j][i] = matrix[j + 1][i];
+                matrix[j + 1][i] = tmp;
             }
-        }
-    }
-
-    public void right() {
-        for (int k = size - 1; k > 0; k--) {
-            for (int row = 0; row < size; row++) {
-                for (int i = size - 1; i > 0; i--) {
-                    if (!hasElement(row, i) && hasElement(row, i - 1)) {
-                        // permutation
-                        int tmp = matrix[row][i];
-                        matrix[row][i] = matrix[row][i - 1];
-                        matrix[row][i - 1] = tmp;
-                    }
-                    if (hasElement(row, i) && hasElement(row, i - 1) && (matrix[row][i] == matrix[row][i - 1])) {
-                        // add
-                        matrix[row][i] *= 2;
-                        matrix[row][i - 1] = 0;
-                        break;
-                    }
-                }
+            if (hasElement(j, i) && hasElement(j + 1, i) && (matrix[j][i] == matrix[j + 1][i])) {
+                // add
+                matrix[j][i] *= 2;
+                matrix[j + 1][i] = 0;
+                break;
             }
         }
 
     }
 
-    public void left() {
-        for (int k = 0; k < size - 1; k++) {
-            for (int row = 0; row < size; row++) {
-                for (int i = 0; i < size - 1; i++) {
-                    if (!hasElement(row, i) && hasElement(row, i + 1)) {
-                        // permutation
-                        int tmp = matrix[row][i];
-                        matrix[row][i] = matrix[row][i + 1];
-                        matrix[row][i + 1] = tmp;
-                    }
-                    if (hasElement(row, i) && hasElement(row, i + 1) && (matrix[row][i] == matrix[row][i + 1])) {
-                        // add
-                        matrix[row][i] *= 2;
-                        matrix[row][i + 1] = 0;
-                        break;
-                    }
-                }
+    public void down(final int i) {
+
+        for (int j = size - 1; j > 0; j--) {
+            if (!hasElement(j, i) && hasElement(j - 1, i)) {
+                // permutation
+                int tmp = matrix[j][i];
+                matrix[j][i] = matrix[j - 1][i];
+                matrix[j - 1][i] = tmp;
+            }
+            if (hasElement(j, i) && hasElement(j - 1, i) && (matrix[j][i] == matrix[j - 1][i])) {
+                // add
+                matrix[j][i] *= 2;
+                matrix[j - 1][i] = 0;
+                break;
+            }
+        }
+
+    }
+
+    public void right(final int i) {
+
+        for (int j = size - 1; j > 0; j--) {
+            if (!hasElement(i, j) && hasElement(i, j - 1)) {
+                // permutation
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][j - 1];
+                matrix[i][j - 1] = tmp;
+            }
+            if (hasElement(i, j) && hasElement(i, j - 1) && (matrix[i][j] == matrix[i][j - 1])) {
+                // add
+                matrix[i][j] *= 2;
+                matrix[i][j - 1] = 0;
+                break;
+            }
+        }
+
+
+    }
+
+    public void left(final int i) {
+
+        for (int j = 0; j < size - 1; j++) {
+            if (!hasElement(i, j) && hasElement(i, j + 1)) {
+                // permutation
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][j + 1];
+                matrix[i][j + 1] = tmp;
+            }
+            if (hasElement(i, j) && hasElement(i, j + 1) && (matrix[i][j] == matrix[i][j + 1])) {
+                // add
+                matrix[i][j] *= 2;
+                matrix[i][j + 1] = 0;
+                break;
             }
         }
     }
 
-    public void move() {
-        for (int k = 0; k < size - 1; k++) {
+    public void move(final Direction direction) {
+        for (int k = 0; k < size; k++) {// size -1
             for (int i = 0; i < size; i++) {
-
+                switch (direction) {
+                    case UP:
+                        up(i);
+                        break;
+                    case DOWN:
+                        down(i);
+                        break;
+                    case LEFT:
+                        left(i);
+                        break;
+                    case RIGHT:
+                        right(i);
+                        break;
+                }
             }
         }
     }

@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+Supprimerait libs/
+Supprimerait src/main/java/com/example/a2048/controllor/
+Supprimerait src/main/java/com/example/a2048/model/Direction.java
+Supprimerait src/main/java/com/example/a2048/view/
